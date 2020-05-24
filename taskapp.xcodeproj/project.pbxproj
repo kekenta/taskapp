@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		E79BBADE245FEB9C00C7EA5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E79BBADD245FEB9C00C7EA5F /* Assets.xcassets */; };
 		E79BBAE1245FEB9C00C7EA5F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E79BBADF245FEB9C00C7EA5F /* LaunchScreen.storyboard */; };
 		E79BBAE9245FEF4300C7EA5F /* InputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79BBAE8245FEF4300C7EA5F /* InputViewController.swift */; };
+		E79BBAEB2468208800C7EA5F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79BBAEA2468208800C7EA5F /* Task.swift */; };
 		FBFC931D6F7EFFD74548F2F6 /* Pods_taskapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF51E431F14456EF5ACCFB79 /* Pods_taskapp.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		E79BBAE0245FEB9C00C7EA5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E79BBAE2245FEB9C00C7EA5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E79BBAE8245FEF4300C7EA5F /* InputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputViewController.swift; sourceTree = "<group>"; };
+		E79BBAEA2468208800C7EA5F /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Task.swift; path = taskapp/Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +52,6 @@
 				D4EE54A04A6F9A87DC0E2CEE /* Pods-taskapp.debug.xcconfig */,
 				49EC252F7D0EA2AF4ED9B0A1 /* Pods-taskapp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -65,6 +66,7 @@
 		E79BBAC8245FEB9600C7EA5F = {
 			isa = PBXGroup;
 			children = (
+				E79BBAEA2468208800C7EA5F /* Task.swift */,
 				E79BBAD3245FEB9600C7EA5F /* taskapp */,
 				E79BBAD2245FEB9600C7EA5F /* Products */,
 				4C5BE325CB2B7A3BF0B0E79C /* Pods */,
@@ -212,6 +214,7 @@
 			files = (
 				E79BBAD9245FEB9600C7EA5F /* ViewController.swift in Sources */,
 				E79BBAD5245FEB9600C7EA5F /* AppDelegate.swift in Sources */,
+				E79BBAEB2468208800C7EA5F /* Task.swift in Sources */,
 				E79BBAD7245FEB9600C7EA5F /* SceneDelegate.swift in Sources */,
 				E79BBAE9245FEF4300C7EA5F /* InputViewController.swift in Sources */,
 			);
