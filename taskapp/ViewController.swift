@@ -14,18 +14,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 {
 
     @IBOutlet weak var tableView: UITableView!
-    
-    @IBOutlet weak var categorySerch: UITextField!
-    
+    @IBOutlet weak var SerchCategory: UISearchBar!
     //検索結果配列
-    var searchResult = [String]()
+    //var searchResult = [String]()
     
     // Realmインスタンスを取得する
     let realm = try! Realm()  // ←追加
 
     // DB内のタスクが格納される
     // 日付の近い順でソート：昇順
-    // 以降内容をアップデートするとリスト内は自動的に更新される。
+    // 以降内・容をアップデートするとリスト内は自動的に更新される。
     var taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true)
     
     override func viewDidLoad()
@@ -33,6 +31,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        SerchCategory.delegate = self;
     }
     // データの数（＝セルの数）を返すメソッド
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -43,20 +42,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // 各セルの内容を返すメソッド
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
+        
+         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+         let task = taskArray[indexPath.row]
         // 再利用可能な cell を得る
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        if (SerchCategory.text != "")
+        {
+            let predicate = NSPredicate(format: "category == %@",SerchCategory.text!)
+            let results = realm.objects(Task.self).filter(predicate)
+            var searchResult = [Any]()
+            results.forEach
+                {
+                    item in searchResult.append(item)
+                }
+            
+            
+            cell.textLabel?.text = task.title
+            return cell
+        }
+        else
+        {
         
         // Cellに値を設定する.  --- ここから ---
         let task = taskArray[indexPath.row]
         cell.textLabel?.text = task.title
-
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
 
         let dateString:String = formatter.string(from: task.date)
         cell.detailTextLabel?.text = dateString
-        
+            
         return cell
+        }
     }
 
     // セルが削除が可能なことを伝えるメソッド
@@ -130,6 +147,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
          super.viewWillAppear(animated)
          tableView.reloadData()
      }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+    {
+        
+      let searchkey:String? = searchBar.text
+      //let results = realm.objects(Task.self).filter(searchkey == category)
+      let predicate = NSPredicate(format: "category == %@",searchkey!)
+      let results = realm.objects(Task.self).filter(predicate)
+      var searchResult = [Any]()
+        results.forEach { item in
+            searchResult.append(item)
+        }
+        // TableViewを更新
+        tableView.reloadData()
 
+    }
 }
 
+    
