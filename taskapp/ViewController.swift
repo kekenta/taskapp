@@ -15,9 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var SerchCategory: UISearchBar!
-    //検索結果配列
-    //var searchResult = [String]()
-    
+ 
     // Realmインスタンスを取得する
     let realm = try! Realm()  // ←追加
 
@@ -43,28 +41,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
-         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-         let task = taskArray[indexPath.row]
-        // 再利用可能な cell を得る
-        if (SerchCategory.text != "")
-        {
-            let predicate = NSPredicate(format: "category == %@",SerchCategory.text!)
-            let results = realm.objects(Task.self).filter(predicate)
-            var searchResult = [Any]()
-            results.forEach
-                {
-                    item in searchResult.append(item)
-                }
-            
-            
-            cell.textLabel?.text = task.title
-            return cell
-        }
-        else
-        {
-        
-        // Cellに値を設定する.  --- ここから ---
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let task = taskArray[indexPath.row]
+
         cell.textLabel?.text = task.title
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
@@ -73,7 +52,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.detailTextLabel?.text = dateString
             
         return cell
-        }
     }
 
     // セルが削除が可能なことを伝えるメソッド
@@ -154,14 +132,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
       let searchkey:String? = searchBar.text
       //let results = realm.objects(Task.self).filter(searchkey == category)
       let predicate = NSPredicate(format: "category == %@",searchkey!)
-      let results = realm.objects(Task.self).filter(predicate)
-      var searchResult = [Any]()
-        results.forEach { item in
-            searchResult.append(item)
-        }
+      taskArray = realm.objects(Task.self).filter(predicate)
         // TableViewを更新
         tableView.reloadData()
-
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool
+    {
+        searchBar.showsCancelButton = true
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar)
+    {
+        taskArray = realm.objects(Task.self)
+        tableView.reloadData()
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
     }
 }
 
